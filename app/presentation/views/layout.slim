@@ -1,7 +1,12 @@
 doctype html
 html
   head
-    title Credence
+    meta[charset="utf-8"]
+    meta[name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"]
+    meta[name="keywords" content="Bootstrap, Landing page, Template, Business, Service"]
+    meta[name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"]
+    meta[name="author" content="Grayrids"]
+    title Pets_Tinder
     
     / Themed Bootstrap CSS (Cerulean Theme) - see bootswatch.com for more themes
     / - default Bootstrap CSS: https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css
@@ -19,3 +24,33 @@ html
       section
         == render :flash_bar
         == yield
+
+
+  footer 
+    section#footer-Content
+        .container
+          .row
+            .col-lg-2.col-md-6.col-sm-6.col-xs-6.col-mb-6
+              .widget
+                h3.block-title
+                  | About
+            .col-lg-2.col-md-6.col-sm-6.col-xs-6.col-mb-6
+              .widget
+                h3.block-title
+                  | Contact
+            .col-lg-2.col-md-6.col-sm-6.col-xs-6.col-mb-6
+              .widget
+                h3.block-title
+                  |  Test 
+            .col-lg-3.col-md-6.col-sm-6.col-xs-6.col-mb-6
+              .widget
+
+        .copyright
+          .container
+            .row
+              .col-md-12
+                .site-info.text-center
+                  p
+                    | Crafted by 
+                    a[href="http://uideck.com" rel="nofollow"]
+                      | UIdeck
