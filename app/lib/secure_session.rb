@@ -18,7 +18,7 @@ class SecureSession
 
   def self.wipe_redis_sessions
     redis = Redis.new(url: @redis_url)
-    redis.each_key { |session_id| redis.del session_id }
+    redis.keys.each { |session_id| redis.del session_id }
   end
 
   ## Instance methods to store and retrieve encrypted session data
