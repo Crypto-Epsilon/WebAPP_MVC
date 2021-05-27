@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # Web
-gem 'puma'
+gem 'puma', '~> 5.3.1'
 gem 'roda'
 gem 'slim'
 
