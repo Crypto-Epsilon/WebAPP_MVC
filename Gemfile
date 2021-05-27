@@ -3,6 +3,9 @@
 source 'https://rubygems.org'
 
 
+# Communication
+gem 'http'
+gem 'redis'
 gem 'redis-rack'
 
 # Web

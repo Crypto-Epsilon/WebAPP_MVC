@@ -110,6 +110,7 @@ DEPENDENCIES
   rack-test
   rake
   rbnacl
+  redis
   redis-rack
   rerun
   roda
