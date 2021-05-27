@@ -2,6 +2,9 @@
 
 source 'https://rubygems.org'
 
+
+gem 'redis-rack'
+
 # Web
 gem 'puma', '~> 5.3.1'
 gem 'roda'
