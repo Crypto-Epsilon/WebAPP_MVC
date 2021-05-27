@@ -40,6 +40,7 @@ module Pets_Tinder
           redis_server: ENV.delete('REDIS_URL')
     end
 
+    # We can utilize any of the three methods below, at the moment we are using Pool
     configure :development, :test do
       # use Rack::Session::Cookie,
       #     expire_after: ONE_MONTH, secret: config.SESSION_SECRET

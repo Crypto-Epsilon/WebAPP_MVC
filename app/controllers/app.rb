@@ -1,4 +1,3 @@
-
 require 'roda'
 require 'slim'
 
@@ -20,7 +19,7 @@ module Pets_Tinder
 
     route do |routing|
       response['Content-Type'] = 'text/html; charset=utf-8'
-      @current_account = SecureSession.new(session).get(:current_account)
+      @current_account = SecureSession.new(session).get(:current_account) #session stored in local Hash
 
       routing.public
       routing.assets
