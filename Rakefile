@@ -61,12 +61,13 @@ namespace :generate do
   end
 end
 
+#Tasks to manage Redis
 namespace :session do
   desc 'Wipe all sessions stored in Redis'
   task :wipe => :load_lib do
     require 'redis'
     puts 'Deleting all sessions from Redis session store'
-    wiped = SecureSession.wipe_redis_sessions
+    wiped = SecureSession.wipe_redis_sessions #lib/secure_session.rb
     puts "#{wiped.count} sessions deleted"
   end
 end
