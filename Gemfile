@@ -3,6 +3,12 @@
 source 'https://rubygems.org'
 ruby File.read('.ruby-version').strip
 
+
+# Communication
+gem 'http'
+gem 'redis'
+gem 'redis-rack'
+
 # Web
 gem 'puma', '~> 5.3.1'
 gem 'roda'
