@@ -8,7 +8,7 @@ nav.navbar.navbar-expand-md.bg-inverse.fixed-top.scrolling-navbar
             i.lni-menu
           #navbarCollapse.collapse.navbar-collapse
             ul.navbar-nav.mr-auto.w-100.justify-content-end
-             - if @current_account
+             - if @current_account.logged_in?
               li.nav-item
                 a.nav-link.page-scroll[href="/"]
                   | Home

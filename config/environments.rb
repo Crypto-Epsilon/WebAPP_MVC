@@ -1,7 +1,7 @@
+require 'delegate'
 require 'roda'
 require 'figaro'
 require 'logger'
-require 'delegate'
 require 'rack/ssl-enforcer'
 require 'rack/session/redis'
 require_relative '../require_app'
@@ -24,11 +24,11 @@ module Pets_Tinder
     # Logger setup
     LOGGER = Logger.new($stderr)
     def self.logger() = LOGGER
-    
+
     ONE_MONTH = 30 * 24 * 60 * 60
 
     configure do
-      SecureSession.setup(ENV['REDIS_URL']) # REDIS_URL used again below
+      SecureSession.setup(ENV['REDIS_TLS_URL']) # REDIS_TLS_URL used again below
       SecureMessage.setup(ENV.delete('MSG_KEY'))
     end
 
@@ -37,10 +37,12 @@ module Pets_Tinder
 
       use Rack::Session::Redis,
           expire_after: ONE_MONTH,
-          redis_server: ENV.delete('REDIS_URL')
+          redis_server: {
+            url: ENV.delete('REDIS_TLS_URL'),
+            ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE }
+          }
     end
 
-    # We can utilize any of the three methods below, at the moment we are using Pool
     configure :development, :test do
       # use Rack::Session::Cookie,
       #     expire_after: ONE_MONTH, secret: config.SESSION_SECRET
@@ -50,7 +52,10 @@ module Pets_Tinder
 
       # use Rack::Session::Redis,
       #     expire_after: ONE_MONTH,
-      #     redis_server: ENV.delete('REDIS_URL')
+      #     redis_server: {
+      #       url: ENV.delete('REDIS_TLS_URL'),
+      #       ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE }
+      #     }
     end
 
     configure :development, :test do
@@ -61,5 +66,6 @@ module Pets_Tinder
         exec 'pry -r ./spec/test_load_all'
       end
     end
-  end
+    end
+    end
 end

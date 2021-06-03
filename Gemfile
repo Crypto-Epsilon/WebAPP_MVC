@@ -1,13 +1,5 @@
-# frozen_string_literal: true
-
 source 'https://rubygems.org'
 ruby File.read('.ruby-version').strip
-
-
-# Communication
-gem 'http'
-gem 'redis'
-gem 'redis-rack'
 
 # Web
 gem 'puma', '~> 5.3.1'
@@ -29,6 +21,7 @@ gem 'rbnacl' # assumes libsodium package already installed
 
 # Debugging
 gem 'pry'
+gem 'rack-test'
 
 # Development
 group :development do
@@ -44,6 +37,5 @@ group :test do
 end
 
 group :development, :test do
-  gem 'rack-test'
   gem 'rerun'
 end
