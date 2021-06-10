@@ -1,4 +1,4 @@
-require_relative './current_account'
+require_relative './account'
 
 module Pets_Tinder
   # Managing session information
@@ -8,7 +8,7 @@ module Pets_Tinder
     end
 
     def current_account
-      CurrentAccount.new(@secure_session.get(:account),
+      Account.new(@secure_session.get(:account),
                          @secure_session.get(:auth_token))
     end
 

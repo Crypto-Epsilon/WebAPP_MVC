@@ -1,5 +1,6 @@
 require 'roda'
 require 'slim'
+require 'slim/include'
 
 module Pets_Tinder
 

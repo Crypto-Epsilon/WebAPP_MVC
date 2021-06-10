@@ -1,0 +1,5 @@
+en:
+  errors:
+    name: 'Provide a habit.'
+    category: 'Provide a category.'
+    description: 'Provide a description.'

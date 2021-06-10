@@ -1,0 +1,5 @@
+en:
+  errors:
+    petname: 'Provide a pet name.'
+    petrace: 'Provide a pet race.'
+    birthday: 'Input a birthday in any format.'

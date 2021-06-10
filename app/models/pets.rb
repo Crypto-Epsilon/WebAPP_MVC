@@ -5,7 +5,7 @@ module Pets_Tinder
   class Pet
     attr_reader :all
 
-    def initialize(projects_list)
+    def initialize(pet_list)
       @all = pet_list.map do |pe|
         Pet.new(pe)
       end
