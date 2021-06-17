@@ -11,7 +11,7 @@ module Pets_Tinder
         routing.on(String) do |pet_id|
           @pet_route = "#{@pet_route}/#{pet_id}"
 
-          # GET /pet/[pet_id]
+          # GET /pets/[pet_id]
           routing.get do
             pet_info = GetPet.new(App.config).call(
               @current_account, pet_id
@@ -23,11 +23,11 @@ module Pets_Tinder
             }
           rescue StandardError => e
             puts "#{e.inspect}\n#{e.backtrace}"
-            flash[:error] = 'Pet not found'
+            flash[:error] = 'Pet not found.'
             routing.redirect @pet_route
           end
 
-          # POST /pet/[pet_id]/habit/
+          # POST /pets/[pet_id]/habit/
           routing.post('habit') do
             habit_data = Form::NewHabit.new.call(routing.params)
             if habit_data.failure?
@@ -57,12 +57,12 @@ module Pets_Tinder
 
           pet = Pet.new(pet_list)
 
-          view :pets_all, locals: {
+          view :pet_all, locals: {
             current_account: @current_account, pet: pet
           }
         end
 
-        # POST /projects/
+        # POST /pets/
         routing.post do
           routing.redirect '/auth/login' unless @current_account.logged_in?
           puts "PET: #{routing.params}"
@@ -77,10 +77,10 @@ module Pets_Tinder
             pet_data: pet_data.to_h
           )
 
-          flash[:notice] = 'Add habits to your pet.'
+          flash[:notice] = 'Add habits to your new pet.'
         rescue StandardError => e
-          puts "FAILURE Creating Pet: #{e.inspect}"
-          flash[:error] = 'Could not create pet'
+          puts "FAILURE Creating Pet: #{e.inspect}."
+          flash[:error] = 'Could not create pet.'
         ensure
           routing.redirect @pet_route
         end

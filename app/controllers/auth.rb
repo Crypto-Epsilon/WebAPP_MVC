@@ -4,12 +4,23 @@ require_relative './app'
 module Pets_Tinder
   
   class App < Roda
-    route('auth') do |routing| # rubocop:disable Metrics/BlockLength
+    def gh_oauth_url(config)
+      url = config.GH_OAUTH_URL
+      client_id = config.GH_CLIENT_ID
+      scope = config.GH_SCOPE
+
+      "#{url}?client_id=#{client_id}&scope=#{scope}"
+    end
+
+    route('auth') do |routing|
+      @oauth_callback = '/auth/sso_callback'
       @login_route = '/auth/login'
       routing.is 'login' do
         # GET /auth/login
         routing.get do
-          view :login
+          view :login, locals: {
+            gh_oauth_url: gh_oauth_url(App.config)
+          }
         end
 
         # POST /auth/login
@@ -21,8 +32,7 @@ module Pets_Tinder
             routing.redirect @login_route
           end
 
-          authenticated = AuthenticateAccount.new(App.config)
-            .call(**credentials.values)
+          authenticated = AuthenticateAccount.new.call(**credentials.values)
 
           current_account = Account.new(
             authenticated[:account],
@@ -32,12 +42,12 @@ module Pets_Tinder
           CurrentSession.new(session).set(:current_account, account)
 
           flash[:notice] = "Welcome back #{account['username']}!"
-          routing.redirect '/'
-        rescue AuthenticateAccount::UnauthorizedError
-          flash.now[:error] = 'Username and password did not match our records'
-          response.status = 403
-          view :login
-        rescue AuthenticateAccount::ApiServerError => e
+          routing.redirect '/pets'
+        rescue AuthenticateAccount::NotAuthenticatedError
+          flash[:error] = 'Username and password did not match our records'
+          response.status = 401
+          routing.redirect @login_route
+        rescue StandardError => e
           puts "LOGIN ERROR: #{e.inspect}\n#{e.backtrace}"
           flash[:error] = 'Our servers are not responding -- please try later'
           response.status = 500
@@ -45,7 +55,35 @@ module Pets_Tinder
         end
       end
 
-      #GET /auth/logout
+      routing.is 'sso_callback' do
+        # GET /auth/sso_callback
+        routing.get do
+          authorized = AuthorizeGithubAccount
+                       .new(App.config)
+                       .call(routing.params['code'])
+
+          current_account = Account.new(
+            authorized[:account],
+            authorized[:auth_token]
+          )
+
+          CurrentSession.new(session).current_account = current_account
+
+          flash[:notice] = "Welcome #{current_account.username}!"
+          routing.redirect '/projects'
+        rescue AuthorizeGithubAccount::UnauthorizedError
+          flash[:error] = 'Could not login with Github'
+          response.status = 403
+          routing.redirect @login_route
+        rescue StandardError => e
+          puts "SSO LOGIN ERROR: #{e.inspect}\n#{e.backtrace}"
+          flash[:error] = 'Unexpected API Error'
+          response.status = 500
+          routing.redirect @login_route
+        end
+      end
+
+      # GET /auth/logout
       @logout_route = '/auth/logout'
       routing.is 'logout' do
         routing.get do
@@ -76,7 +114,7 @@ module Pets_Tinder
             flash[:notice] = 'Please check your email for a verification link.'
             routing.redirect '/'
           rescue StandardError => e
-            puts "ERROR verifying registration: #{routing.params}\n#{e.inspect}"
+            puts "Error verifying registration: #{routing.params}\n#{e.inspect}"
             flash[:error] = 'Please use English characters for username only.'
             routing.redirect @register_route
           end
@@ -84,7 +122,7 @@ module Pets_Tinder
 
         # GET /auth/register/<token>
         routing.get(String) do |registration_token|
-          flash.now[:notice] = 'Email verified, please choose a new password.'
+          flash.now[:notice] = 'Email Verified! Please choose a new password.'
           new_account = SecureMessage.decrypt(registration_token)
           view :register_confirm,
                locals: { new_account: new_account,
