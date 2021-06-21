@@ -1,4 +1,5 @@
 require 'roda'
+require_relative './app'
 
 module Pets_Tinder
   # Web controller for Credence API

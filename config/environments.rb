@@ -2,7 +2,6 @@ require 'delegate'
 require 'roda'
 require 'figaro'
 require 'logger'
-require 'rack/ssl-enforcer'
 require 'rack/session/redis'
 require_relative '../require_app'
 
@@ -30,13 +29,14 @@ module Pets_Tinder
     configure do
       SecureSession.setup(ENV['REDIS_TLS_URL']) # REDIS_TLS_URL used again below
       SecureMessage.setup(ENV.delete('MSG_KEY'))
+      SignedMessage.setup(config)
     end
 
     configure :production do
-      use Rack::SslEnforcer, hsts: true
-
       use Rack::Session::Redis,
           expire_after: ONE_MONTH,
+          httponly: true,
+          same_site: :strict,
           redis_server: {
             url: ENV.delete('REDIS_TLS_URL'),
             ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE }
@@ -47,15 +47,16 @@ module Pets_Tinder
       # use Rack::Session::Cookie,
       #     expire_after: ONE_MONTH, secret: config.SESSION_SECRET
 
-      use Rack::Session::Pool,
-          expire_after: ONE_MONTH
+      # use Rack::Session::Pool,
+      #     expire_after: ONE_MONTH
 
-      # use Rack::Session::Redis,
-      #     expire_after: ONE_MONTH,
-      #     redis_server: {
-      #       url: ENV.delete('REDIS_TLS_URL'),
-      #       ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE }
-      #     }
+      use Rack::Session::Redis,
+          expire_after: ONE_MONTH,
+          httponly: true,
+          same_site: :strict,
+          redis_server: {
+            url: ENV.delete('REDIS_URL')
+          }
     end
 
     configure :development, :test do
@@ -66,6 +67,5 @@ module Pets_Tinder
         exec 'pry -r ./spec/test_load_all'
       end
     end
-    end
-    end
+  end
 end
