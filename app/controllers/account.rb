@@ -18,7 +18,6 @@ module Pets_Tinder
           routing.redirect '/auth/login'
         end
 
-
         # POST /account/<registration_token>
         routing.post String do |registration_token|
           passwords = Form::Passwords.new.call(routing.params)
