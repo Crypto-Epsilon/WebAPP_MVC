@@ -43,9 +43,8 @@ module Pets_Tinder
             )
 
             flash[:notice] = 'Your habit was added.'
-          rescue StandardError => error
-            puts error.inspect
-            puts error.backtrace
+          rescue StandardError => e
+            puts "Error creating habit: #{e.inspect}"
             flash[:error] = 'Could not add habit.'
           ensure
             routing.redirect @pet_route
@@ -66,7 +65,7 @@ module Pets_Tinder
         # POST /pets/
         routing.post do
           routing.redirect '/auth/login' unless @current_account.logged_in?
-          puts "PET: #{routing.params}"
+          
           pet_data = Form::NewPet.new.call(routing.params)
           if pet_data.failure?
             flash[:error] = Form.message_values(pet_data)

@@ -7,13 +7,13 @@ module Pets_Tinder
     route('habit') do |routing|
       routing.redirect '/auth/login' unless @current_account.logged_in?
 
-      # GET /pets/[doc_id]
+      # GET /pets/[hab_id]
       routing.get(String) do |hab_id|
         hab_info = GetHabit.new(App.config)
                               .call(@current_account, hab_id)
         habit = Habit.new(hab_info)
 
-        view :habit\ {
+        view :habit, locals: {
           current_account: @current_account, habit: habit
         }
       end
