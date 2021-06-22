@@ -33,7 +33,7 @@ task :audit do
   sh 'bundle audit check --update'
 end
 
-desc 'Checks for release.'
+desc 'Checks for release'
 task :release => [:spec, :style, :audit] do
   puts "\nReady for release!"
 end
@@ -55,7 +55,7 @@ namespace :generate do
     puts "New MSG_KEY (base64): #{SecureMessage.generate_key}"
   end
 
-  desc 'Create cookie secret'
+  desc 'Create cookie secret.'
   task :session_secret => :load_lib do
     puts "New SESSION_SECRET (base64): #{SecureSession.generate_secret}"
   end
@@ -63,7 +63,7 @@ end
 
 namespace :url do
   # usage: $ rake url:integrity URL=http://example.org/script.js
-  desc 'Generate integrity hash for a URL'
+  desc 'Generate integrity hash for a URL.'
   task :integrity do
     sha384 = `curl -L -s #{ENV['URL']} | openssl dgst -sha384 -binary | \
               openssl enc -base64`
@@ -77,6 +77,6 @@ namespace :session do
     require 'redis'
     puts 'Deleting all sessions from Redis session store.'
     wiped = SecureSession.wipe_redis_sessions
-    puts "#{wiped.count} sessions deleted."
+    puts "#{wiped.count} sessions deleted"
   end
 end
