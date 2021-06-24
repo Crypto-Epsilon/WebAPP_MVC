@@ -1,37 +1,26 @@
-header#home.hero-area
-      .overlay
-        span
-        span
-nav.navbar.navbar-expand-md.bg-inverse.fixed-top.scrolling-navbar
-        .container
-          button.navbar-toggler[type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"]
-            i.lni-menu
-          #navbarCollapse.collapse.navbar-collapse
-            ul.navbar-nav.mr-auto.w-100.justify-content-end
-             - if @current_account.logged_in?
-              li.nav-item
-                a.nav-link.page-scroll[href="/"]
-                  | Home
-              li.nav-item
-                a.nav-link.page-scroll[href="/account/#{@current_account['username']}"] 
-                  | Account
-              li.nav-item
-                a.btn.btn-singin[href='/auth/logout']
-                  | Logout
-             - else
-                li.nav-item
-                a.nav-link.page-scroll[href="/"]
-                  | Home
-              li.nav-item
-                a.nav-link.page-scroll[href='/auth/login'] 
-                  | login
-              li.nav-item
-                a.btn.btn-singin[href='/auth/login']
-                  | Register
+nav role="navigation" class="navbar navbar-expand-sm navbar-dark bg-primary"
+  div class="container-fluid"
+    a class="navbar-brand" rel="home" href="/" title="Securely Share Configurations"
+        img alt="" src="/logo.png" style="max-width:35px; margin-top: -7px;"
+    a class="navbar-brand" href="/" PetsTinder 
+    button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation"
+      span class="navbar-toggler-icon"
 
-      .container
-        .row.space-100
-          .col-lg-6.col-md-12.col-xs-12
-            .contents
+    div class="collapse navbar-collapse" id="mainNavbar"
+      ul class="navbar-nav me-auto"
+        - if @current_account.logged_in?
+          li class="nav-item"
+            a class="nav-link" href="/pets/" Pets 
+          li class="nav-item dropdown"
+            a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+              = "#{@current_account.username}"
 
-          .col-lg-6.col-md-12.col-xs-12.p-0
+            div class=-"dropdown-menu"
+              a class="dropdown-item" href="/account/#{@current_account.username}" account
+              a class="dropdown-item" href='/auth/logout' logout
+        - else
+          li class="nav-item"
+            a class="nav-link" href='/auth/login' login
+          li class="nav-item"
+            a class="nav-link" href='/auth/register' register
+        

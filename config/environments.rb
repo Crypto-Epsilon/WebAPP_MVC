@@ -47,16 +47,16 @@ module PetsTinder
       # use Rack::Session::Cookie,
       #     expire_after: ONE_MONTH, secret: config.SESSION_SECRET
 
-      # use Rack::Session::Pool,
-      #     expire_after: ONE_MONTH
+      use Rack::Session::Pool,
+          expire_after: ONE_MONTH
 
-      use Rack::Session::Redis,
-          expire_after: ONE_MONTH,
-          httponly: true,
-          same_site: :strict,
-          redis_server: {
-            url: ENV.delete('REDIS_URL')
-          }
+      # use Rack::Session::Redis,
+      #     expire_after: ONE_MONTH,
+      #     httponly: true,
+      #     same_site: :strict,
+      #     redis_server: {
+      #       url: ENV.delete('REDIS_URL')
+      #     }
     end
 
     configure :development, :test do

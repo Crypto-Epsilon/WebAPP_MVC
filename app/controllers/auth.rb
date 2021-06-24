@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'roda'
 require_relative './app'
 
 module PetsTinder
-  
+  # Web controller for PetsTinder App
   class App < Roda
     def gh_oauth_url(config)
       url = config.GH_OAUTH_URL
@@ -70,7 +72,7 @@ module PetsTinder
           CurrentSession.new(session).current_account = current_account
 
           flash[:notice] = "Welcome #{current_account.username}!"
-          routing.redirect '/projects'
+          routing.redirect '/pets'
         rescue AuthorizeGithubAccount::UnauthorizedError
           flash[:error] = 'Could not login with Github'
           response.status = 403
@@ -111,18 +113,18 @@ module PetsTinder
 
             VerifyRegistration.new(App.config).call(registration)
 
-            flash[:notice] = 'Please check your email for a verification link.'
+            flash[:notice] = 'Please check your email for a verification link'
             routing.redirect '/'
-          rescue StandardError => e
-            puts "Error verifying registration: #{routing.params}\n#{e.inspect}"
-            flash[:error] = 'Please use English characters for username only.'
-            routing.redirect @register_route
+           rescue StandardError => e
+             puts "ERROR VERIFYING REGISTRATION: #{routing.params}\n#{e.inspect}"
+             flash[:error] = 'Please use English characters for username only'
+             routing.redirect @register_route
           end
         end
 
         # GET /auth/register/<token>
         routing.get(String) do |registration_token|
-          flash.now[:notice] = 'Email Verified! Please choose a new password.'
+          flash.now[:notice] = 'Email Verified! Please choose a new password'
           new_account = SecureMessage.decrypt(registration_token)
           view :register_confirm,
                locals: { new_account: new_account,
