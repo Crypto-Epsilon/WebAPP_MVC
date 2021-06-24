@@ -3,7 +3,7 @@ require_relative 'pet'
 module PetsTinder
   # Behaviors of the currently logged in account
   class Pet
-    attr_reader :id, :petname, :petrace, :birthday, :description
+    attr_reader :id, :petname, :petrace, :birthday, :description,
                 :owner, :swipers, :habit
 
     def initialize(pet_info)

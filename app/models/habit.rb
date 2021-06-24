@@ -1,4 +1,5 @@
-require_relative 'pet'
+# frozen_string_literal: true
+#require_relative 'pet'
 
 module PetsTinder
   # Behaviors of the currently logged in account

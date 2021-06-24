@@ -1,5 +1,5 @@
 class AddSwiperToPet
-    class OwnerNotSwiperError < StandardError
+  class OwnerNotSwiperError < StandardError
     
     def initialize(config)
             @config = config
@@ -15,5 +15,6 @@ class AddSwiperToPet
                             json: { email: swiper[:email] })
     
         raise OwnerNotSwiperError unless response.code == 200
-      end
     end
+  end
+end
