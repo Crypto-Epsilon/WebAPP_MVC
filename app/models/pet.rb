@@ -2,7 +2,6 @@ require_relative 'pet'
 
 module Pets_Tinder
   # Behaviors of the currently logged in account
-
   class Pet
     attr_reader :id, :petname, :petrace, :birthday, :description
                 :owner, :swipers, :habit
@@ -10,7 +9,7 @@ module Pets_Tinder
     def initialize(pet_info)
       process_attributes(pet_info['attributes'])
       process_relationships(pet_info['relationships'])
-      process_policies(et_info['policies'])
+      process_policies(pet_info['policies'])
     end
 
     private
@@ -33,7 +32,7 @@ module Pets_Tinder
       @policies = OpenStruct.new(policies)
     end
 
-    def process_swipers(swipers_info)
+    def process_habit(swipers_info)
       return nil unless swipers_info
 
       swipers_info.map { |swip_info| Swipers.new(swip_info) }
