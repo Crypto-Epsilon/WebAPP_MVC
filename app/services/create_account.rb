@@ -1,6 +1,6 @@
 require 'http'
 
-module Pets_Tinder
+module PetsTinder
   # Returns an authenticated user, or nil
   class CreateAccount
     # Error for accounts that cannot be created

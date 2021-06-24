@@ -1,6 +1,6 @@
 require_relative 'pet'
 
-module Pets_Tinder
+module PetsTinder
   # Behaviors of the currently logged in account
   class Pet
     attr_reader :id, :petname, :petrace, :birthday, :description

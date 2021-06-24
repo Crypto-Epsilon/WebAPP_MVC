@@ -3,4 +3,4 @@
 require './require_app'
 require_app
 
-run Pets_Tinder::App.freeze.app
+run PetsTinder::App.freeze.app

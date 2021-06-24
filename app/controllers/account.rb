@@ -1,8 +1,8 @@
 require 'roda'
 require_relative './app'
 
-module Pets_Tinder
-  # Web controller for Pets_Tinder API
+module PetsTinder
+  # Web controller for PetsTinder API
   class App < Roda
     route('account') do |routing|
       routing.on do

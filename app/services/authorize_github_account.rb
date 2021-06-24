@@ -1,6 +1,6 @@
 require 'http'
 
-module Pets_Tinder
+module PetsTinder
   # Returns an authenticated user, or nil
   class AuthorizeGithubAccount
     # Errors emanating from Github

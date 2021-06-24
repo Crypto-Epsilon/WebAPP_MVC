@@ -1,6 +1,6 @@
 require_relative './account'
 
-module Pets_Tinder
+module PetsTinder
   # Managing session information
   class CurrentSession
     def initialize(session)

@@ -1,7 +1,7 @@
 require 'roda'
 require_relative './app'
 
-module Pets_Tinder
+module PetsTinder
   # Web controller for Credence API
   class App < Roda
     route('pet') do |routing|

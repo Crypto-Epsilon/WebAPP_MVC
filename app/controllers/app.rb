@@ -2,7 +2,7 @@ require 'roda'
 require 'slim'
 require 'slim/include'
 
-module Pets_Tinder
+module PetsTinder
 
   class App < Roda
     plugin :render, engine: 'slim', views: 'app/presentation/views'

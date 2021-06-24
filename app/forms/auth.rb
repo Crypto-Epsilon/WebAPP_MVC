@@ -1,6 +1,6 @@
 require_relative 'form_base'
 
-module Pets_Tinder
+module PetsTinder
   module Form
     class LoginCredentials < Dry::Validation::Contract
       params do

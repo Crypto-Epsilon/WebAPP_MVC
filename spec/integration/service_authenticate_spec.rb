@@ -29,7 +29,7 @@ describe 'Test Service Objects' do
              .to_return(body: auth_return_json,
                         headers: { 'content-type' => 'application/json' })
 
-      auth = Pets_Tinder::AuthenticateAccount.new.call(**@credentials)
+      auth = PetsTinder::AuthenticateAccount.new.call(**@credentials)
 
       account = auth[:account]['attributes']
       _(account).wont_be_nil
@@ -42,8 +42,8 @@ describe 'Test Service Objects' do
              .with(body: SignedMessage.sign(@mal_credentials).to_json)
              .to_return(status: 401)
       _(proc {
-        Pets_Tinder::AuthenticateAccount.new.call(**@mal_credentials)
-      }).must_raise Pets_Tinder::AuthenticateAccount::NotAuthenticatedError
+        PetsTinder::AuthenticateAccount.new.call(**@mal_credentials)
+      }).must_raise PetsTinder::AuthenticateAccount::NotAuthenticatedError
     end
   end
 end

@@ -4,7 +4,7 @@ require_relative '../require_app'
 require_app
 
 def app
-  Pets_Tinder::App
+  PetsTinder::App
 end
 
 unless app.environment == :production

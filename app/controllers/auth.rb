@@ -1,7 +1,7 @@
 require 'roda'
 require_relative './app'
 
-module Pets_Tinder
+module PetsTinder
   
   class App < Roda
     def gh_oauth_url(config)

@@ -1,4 +1,4 @@
-module Pets_Tinder
+module PetsTinder
   # Behaviors of the currently logged in account
   class Account
     def initialize(account_info, auth_token = nil)

@@ -1,6 +1,6 @@
 require 'dry-validation'
 
-module Pets_Tinder
+module PetsTinder
   # Form helpers
   module Form
     USERNAME_REGEX = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/.freeze

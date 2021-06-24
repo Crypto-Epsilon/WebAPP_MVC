@@ -7,7 +7,7 @@ require_relative '../require_app'
 
 require_app('lib')
 
-module Pets_Tinder
+module PetsTinder
   # Configuration for the API
   class App < Roda
     plugin :environments
