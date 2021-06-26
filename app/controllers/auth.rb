@@ -106,10 +106,10 @@ module PetsTinder
           routing.post do
             registration = Form::Registration.new.call(routing.params)
 
-            if registration.failure?
-              flash[:error] = Form.validation_errors(registration)
-              routing.redirect @register_route
-            end
+            # if registration.failure?
+            #   flash[:error] = Form.validation_errors(registration)
+            #   routing.redirect @register_route
+            # end
 
             VerifyRegistration.new(App.config).call(registration)
 
